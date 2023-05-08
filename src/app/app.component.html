@@ -1,0 +1,69 @@
+<div class="container"></div>
+<h1> {{topic}}</h1><br><br>
+<div class="form-area">
+  <form [formGroup]="form1" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>First name</label>
+    <input
+     type="text"
+    placeholder="Name"
+    name="fullName"
+     class="form-control"
+     formControlName="fullName">
+
+     <div class="alert alret-danger" *ngIf="form1.controls['fullName'].touched && form1.controls['fullName'].invalid">
+      <div *ngIf="form1.controls['fullName'].errors?.required">The Full Name Is Required</div>
+      <div *ngIf="form1.controls['fullName'].errors?.minlength">The Full Name Must Be At Least 5 Letter Long</div>
+      <div *ngIf="form1.controls['fullName'].errors?.maxlength">The Full name must be smaller than 10 letter long</div>
+     </div>
+     </div>
+
+ <div class="form-group">
+  <label>E mail</label>
+<input type="email" placeholder="E-mail"  name="email" class="form-control" formControlName="email"/>
+<div class="alert alret-danger" *ngIf="form1.controls['email'].touched && form1.controls['email'].invalid">
+  <div *ngIf="form1.controls['email'].errors?.required">Email Is Required</div>
+  <div *ngIf="form1.controls['email'].errors?.pattern">This is not a valid email</div>
+ </div>
+</div>
+
+
+<div class="form-group" formGroupName="contactDetails">
+  <label>Address</label>
+  <textarea name="address" id="" cols="30" rows="10" class="form-control" formControlName="address"></textarea>
+  <div class="alert alert-danger" *ngIf="form1.get('contactDetails.address').touched && form1.get('contactDetails.address').invalid">
+    <div *ngIf="form1.get('contactDetails.address').errors?.required">Address Is Required</div>
+  </div>
+
+  <label>Shipping Address</label>
+  <textarea name="shippingAddress" id="" cols="30" rows="10" class="form-control" placeholder="Shipping Address" formControlName="shippingAddress"></textarea>
+  <div class="alert alert-danger" *ngIf="form1.get('contactDetails.shippingAddress').touched && form1.get('contactDetails.shippingAddress').invalid">
+    <div *ngIf="form1.get('contactDetails.shippingAddress').errors?.required">Shipping Address Is Required</div>
+  </div>
+
+  <!--<label>Contact Number</label>
+  <textarea name="contactNumber" id="" cols="30" rows="10" class="form-control" placeholder="Contact No" formControlName="contactNumber"></textarea>
+  <div class="alert alert-danger" *ngIf="form1.get('contactDetails.contactNumber').touched && form1.get('contactDetails.contactNumber').invalid">
+    <div *ngIf="form1.get('contactDetails.contactNumber').errors?.required">Contact Number Is Required</div>
+    <div *ngIf="form1.get('contactDetails.contactNumber').errors?.pattern">Invalid Number</div>
+  </div>-->
+</div>
+
+<div class="form-group">
+  <label for="">Skills</label>
+<input type="text" class="form-control" #skill (keyup.enter)="addSkills(skill)">
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let skill of Skills.controls ;let index=index">
+    {{skill.value}}
+    <a href="" class="btn btn-sm btn-danger" (click)="removeskills(index)">X</a>
+  </li>
+</ul>
+</div>
+
+
+
+
+ <button type="submit" class="btn btn-primary" [disabled]="form1.invalid">Submit</button>
+  </form>
+</div>
