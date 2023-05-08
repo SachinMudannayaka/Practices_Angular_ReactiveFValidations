@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {FormGroup, FormControl,Validators,FormArray} from '@angular/forms';
+import {FormGroup, FormControl,Validators,FormArray,FormBuilder} from '@angular/forms';
+import { noSpace } from './validators/nospace.validators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,31 +13,29 @@ export class AppComponent {
   contactRegex:string='[789][0-9]{9}'
 form1:any;
 
-  constructor(){
-    this.form1=new FormGroup({
-      fullName:new FormControl('',[
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(10)
-      ]),
-      email:new FormControl('',[
-        Validators.required,
-        Validators.pattern(this.emailRegex)
-      ]),
+  constructor(fb:FormBuilder){
 
-      contactDetails:new FormGroup({
-        address:new FormControl('',[Validators.required]),
-        shippingAddress:new FormControl('',[Validators.required]),
-        contactNumber:new FormControl('',[Validators.required,Validators.pattern(this.contactRegex)])
+this.form1= fb.group({
+  fullName:['',[
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(10),
+    noSpace.noSpaceValidations
+  ]],
+  email:['',[
+    Validators.required,
+    Validators.pattern(this.emailRegex)
+  ]],
+  contactDetails:fb.group({
+    address:['', Validators.required],
+    shippingAddress:['',Validators.required],
+    contactNumber:['',Validators.required,Validators.pattern(this.contactRegex)],
 
-      }),
+  }),
+  skills:fb.array([])
+})
 
-      skills:new FormArray([])
-    })
-
-
-
-  }
+}
   addSkills(skills:HTMLInputElement){
     this.Skills.push(new FormControl(skills.value))
     skills.value='';

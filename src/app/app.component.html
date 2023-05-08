@@ -1,4 +1,4 @@
-<div class="container"></div>
+<div class="container">
 <h1> {{topic}}</h1><br><br>
 <div class="form-area">
   <form [formGroup]="form1" (ngSubmit)="onSubmit()">
@@ -16,6 +16,7 @@
       <div *ngIf="form1.controls['fullName'].errors?.required">The Full Name Is Required</div>
       <div *ngIf="form1.controls['fullName'].errors?.minlength">The Full Name Must Be At Least 5 Letter Long</div>
       <div *ngIf="form1.controls['fullName'].errors?.maxlength">The Full name must be smaller than 10 letter long</div>
+      <div *ngIf="form1.controls['fullName'].errors?.noSpaceValidator">Spaces cannot be included in the name</div>
      </div>
      </div>
 
@@ -66,4 +67,5 @@
 
  <button type="submit" class="btn btn-primary" [disabled]="form1.invalid">Submit</button>
   </form>
+</div>
 </div>
